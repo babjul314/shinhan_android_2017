@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 0) {//SubActivity가 종료되었으면
             if (resultCode == RESULT_OK) {//값을 넘기는 정상 종료일때만
                 String result = data.getStringExtra("Result");
+                Log.i("onActivityResult", result);
                 EditText editText = (EditText)findViewById(R.id.edittext);
                 editText.setText(result);
             }
