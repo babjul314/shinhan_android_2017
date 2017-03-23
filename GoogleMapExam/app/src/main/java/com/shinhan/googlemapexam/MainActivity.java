@@ -2,6 +2,7 @@ package com.shinhan.googlemapexam;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -9,9 +10,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +93,27 @@ public class MainActivity extends AppCompatActivity {
                             map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                             map.moveCamera(
                                     CameraUpdateFactory.newLatLngZoom(marker.getPosition(),19));
+                            /////////////////////////////////////////////
+                            //팝업 띄우기
+                            ImageView imageView = new ImageView(MainActivity.this);
+                            imageView.setImageResource(R.mipmap.ic_launcher);
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                            dialog.setTitle(marker.getTitle());
+                            dialog.setMessage(marker.getTitle()+"을(를) 클릭했습니다.");
+                            dialog.setView(imageView);
+                            dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(MainActivity.this, "확인 클릭",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(MainActivity.this,"취소 클릭",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            dialog.show();
                             return false;
                         }
                     });
